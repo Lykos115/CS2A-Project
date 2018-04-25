@@ -27,6 +27,7 @@ int main(int, char const**)
 {
     
     int counter = 0;
+    int fallCounter = 0;
     
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
@@ -50,6 +51,7 @@ int main(int, char const**)
     //    sprite.setTextureRect(sf::IntRect(155,100,60,90));
     //    sprite.setTextureRect(sf::IntRect(207,100,90,90));
 //    sprite.setTextureRect(sf::IntRect(0,180,100,100)); jump
+//    sprite.setTextureRect(sf::IntRect(92,170,86,105));second jump
     
     // Create a graphical text to display
     sf::Font font;
@@ -98,26 +100,38 @@ int main(int, char const**)
             }else if(counter < 100){
                 sprite.setTextureRect(sf::IntRect(155,100,60,90));
                 counter++;
-            }else if(counter <=150){
+            }else if(counter < 150){
                 sprite.setTextureRect(sf::IntRect(207,100,90,90));
+                counter++;
+                
+            } else if(counter <= 200) {
+                counter++;
                 counter = 0;
             }
         }
         
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
             sprite.move(0,-1);
-            if (counter < 0) {
-                sprite.setTextureRect(sf::IntRect(0,80,140,100));
-                counter++;
-            } else if (counter < 50){
-                sprite.setTextureRect(sf::IntRect(70,100,80,100));
+            if (counter < 50){
+                sprite.setTextureRect(sf::IntRect(0,180,100,100));
                 counter++;
             }else if(counter < 100){
-                sprite.setTextureRect(sf::IntRect(155,100,60,90));
+                sprite.setTextureRect(sf::IntRect(92,170,86,105));
                 counter++;
-            }else if(counter <=150){
+            }else if(counter == 100){
+                fallCounter = 100;
                 sprite.setTextureRect(sf::IntRect(207,100,90,90));
-                counter = 0;
+                fallCounter--;
+                
+            } else if(fallCounter > 50) {
+                sprite.setTextureRect(sf::IntRect(207,100,90,90));
+                sprite.move(0,1);
+                fallCounter--;
+                
+            }else if (fallCounter > 0){
+                sprite.setTextureRect(sf::IntRect(207,100,90,90));
+                sprite.move(0,1);
+                fallCounter--;
             }
             
         }
