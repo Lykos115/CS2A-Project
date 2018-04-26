@@ -17,6 +17,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "Player.hpp"
 
 using namespace std;
 
@@ -45,13 +46,15 @@ int main(int, char const**)
         return EXIT_FAILURE;
     }
     sf::Sprite sprite(Playertexture);
-    sprite.setPosition(window.getSize().x/2, window.getSize().y/2);
+//    sprite.setPosition(window.getSize().x/2, window.getSize().y/2);
 //    sprite.setTextureRect(sf::IntRect(0,80,70,100));
     //    sprite.setTextureRect(sf::IntRect(70,100,80,100));
     //    sprite.setTextureRect(sf::IntRect(155,100,60,90));
     //    sprite.setTextureRect(sf::IntRect(207,100,90,90));
 //    sprite.setTextureRect(sf::IntRect(0,180,100,100)); jump
-//    sprite.setTextureRect(sf::IntRect(92,170,86,105));second jump
+//    sprite.setTextureRect(sf::IntRect(92,170,86,105));//second jump
+//    sprite.setTextureRect(sf::IntRect(175,175,75,150)); third jump
+//    sprite.setTextureRect(sf::IntRect(250,200,80,100)); forth jump
     
     // Create a graphical text to display
     sf::Font font;
@@ -62,13 +65,16 @@ int main(int, char const**)
     text.setFillColor(sf::Color::Black);
     
     // Load a music to play
-    sf::Music music;
-    if (!music.openFromFile(resourcePath() + "nice_music.ogg")) {
-        return EXIT_FAILURE;
-    }
+//    sf::Music music;
+//    if (!music.openFromFile(resourcePath() + "nice_music.ogg")) {
+//        return EXIT_FAILURE;
+//    }
     
     // Play the music
-    music.play();
+//    music.play();
+    
+    Player player1(sprite);
+//    player1.setSprite(sprite);
     
     // Start the game loop
     while (window.isOpen())
@@ -89,65 +95,78 @@ int main(int, char const**)
         }
         
         
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-            sprite.move(1,0);
-            if (counter < 0) {
-                sprite.setTextureRect(sf::IntRect(0,80,70,100));
-                counter++;
-            } else if (counter < 50){
-                sprite.setTextureRect(sf::IntRect(70,100,80,100));
-                counter++;
-            }else if(counter < 100){
-                sprite.setTextureRect(sf::IntRect(155,100,60,90));
-                counter++;
-            }else if(counter < 150){
-                sprite.setTextureRect(sf::IntRect(207,100,90,90));
-                counter++;
-                
-            } else if(counter <= 200) {
-                counter++;
-                counter = 0;
-            }
-        }
+//        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+//            sprite.move(1,0);
+//            if (counter < 0) {
+//                sprite.setTextureRect(sf::IntRect(0,80,70,100));
+//                counter++;
+//            } else if (counter < 50){
+//                sprite.setTextureRect(sf::IntRect(70,100,80,100));
+//                counter++;
+//            }else if(counter < 100){
+//                sprite.setTextureRect(sf::IntRect(155,100,60,90));
+//                counter++;
+//            }else if(counter > 150){
+//                sprite.setTextureRect(sf::IntRect(207,100,90,90));
+//                counter++;
+//
+//            } else if(counter <= 200) {
+//                counter++;
+//                counter = 0;
+//            }
+//        }
         
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-            sprite.move(0,-1);
-            if (counter < 50){
-                sprite.setTextureRect(sf::IntRect(0,180,100,100));
-                counter++;
-            }else if(counter < 100){
-                sprite.setTextureRect(sf::IntRect(92,170,86,105));
-                counter++;
-            }else if(counter == 100){
-                fallCounter = 100;
-                sprite.setTextureRect(sf::IntRect(207,100,90,90));
-                fallCounter--;
-                
-            } else if(fallCounter > 50) {
-                sprite.setTextureRect(sf::IntRect(207,100,90,90));
-                sprite.move(0,1);
-                fallCounter--;
-                
-            }else if (fallCounter > 0){
-                sprite.setTextureRect(sf::IntRect(207,100,90,90));
-                sprite.move(0,1);
-                fallCounter--;
-            }
-            
-        }
         
-        // should not be included in final product    //
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-            sprite.move(-1,0);
-        }
-        //                                          //
+//        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+//            int gravity = 10;
+//            sprite.move(0,-5);
+//            if (counter < 50){
+//                sprite.setTextureRect(sf::IntRect(0,180,100,100));
+//                counter++;
+//            }else if(counter < 100){
+//                sprite.setTextureRect(sf::IntRect(92,170,86,105));
+//                counter++;
+//            }else if(counter == 100){
+//                fallCounter = 100;
+//                sprite.setTextureRect(sf::IntRect(92,170,86,105));
+//                fallCounter--;
+//
+//            } else if(fallCounter > 50) {
+//                sprite.setTextureRect(sf::IntRect(175,175,75,150));
+//                sprite.move(0,1);
+//                fallCounter--;
+//
+//            }else if (fallCounter > 0){
+//                sprite.setTextureRect(sf::IntRect(250,200,80,100));
+//                sprite.move(0,1);
+//                fallCounter--;
+//            }
+//
+//        }
+        
+//        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+//            sprite.move(0, 1);
+//
+//
+//        }
+//
+//
+//        // should not be included in final product    //
+//        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+//            sprite.move(-1,0);
+//        }
+//        //                                          //
         
         
         // Clear screen
         window.clear();
         
+        player1.update();
+        player1.updateMovement();
+        
         // Draw the sprite
-        window.draw(sprite);
+//        window.draw(sprite);
+        window.draw(player1.getSprite());
         
         // Draw the string
         window.draw(text);
