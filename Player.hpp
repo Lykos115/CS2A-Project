@@ -23,6 +23,7 @@ public:
     
 private:
     int counter = 0;
+    int jumpCounter = 0;
     int fallCounter = 0;
     
 };

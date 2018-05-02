@@ -50,39 +50,48 @@ void Player::updateMovement(){
             }
     
     
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-                int gravity = 10;
-                rect.move(0,-5);
-                if (counter < 50){
-                    sprite.setTextureRect(sf::IntRect(0,180,100,100));
-                    counter++;
-                }else if(counter < 100){
-                    sprite.setTextureRect(sf::IntRect(92,170,86,105));
-                    counter++;
-                } else if (counter == 100){
-                    int currentG = rect.getPosition().y;
-                    while (ground > currentG) {
-                        rect.setPosition(rect.getPosition().x, rect.getPosition().y + gravity);
-                        
-                    }
-                    counter = 0;
-                }
-//                }else if(counter == 100){
-//                    fallCounter = 100;
-//                    sprite.setTextureRect(sf::IntRect(92,170,86,105));
-//                    fallCounter--;
-//
-//                } else if(fallCounter > 50) {
-//                    sprite.setTextureRect(sf::IntRect(175,175,75,150));
-//                    sprite.move(0,1);
-//                    fallCounter--;
-//
-//                }else if (fallCounter > 0){
-//                    sprite.setTextureRect(sf::IntRect(250,200,80,100));
-//                    sprite.move(0,1);
-//                    fallCounter--;
-//                }
     
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+                
+                rect.move(0,-1);
+                if (jumpCounter < 50){
+                    sprite.setTextureRect(sf::IntRect(0,180,100,100));
+                    rect.setPosition(rect.getPosition().x, rect.getPosition().y);
+                    jumpCounter++;
+                    //                        cout << rect.getPosition().y << endl;
+                }else if(jumpCounter < 100){
+                    sprite.setTextureRect(sf::IntRect(92,170,86,105));
+                    rect.setPosition(rect.getPosition().x, rect.getPosition().y);
+                    
+                    jumpCounter++;
+                    //                        cout << rect.getPosition().y << endl;
+                } else if (jumpCounter == 100){
+                    sprite.setTextureRect(sf::IntRect(175,175,75,150));
+                    fallCounter = rect.getPosition().y;
+                    
+                }
+                cout << jumpCounter << endl;
+                
+                while (fallCounter > 0 && rect.getPosition().y < 400) {
+                    if (fallCounter >= 100) {
+                        sprite.setTextureRect(sf::IntRect(175,175,75,150));
+                        rect.setPosition(rect.getPosition().x+.25, rect.getPosition().y + 1);
+                        fallCounter--;
+                    } else if (fallCounter >= 50){
+                        sprite.setTextureRect(sf::IntRect(250,200,80,100));
+                        rect.setPosition(rect.getPosition().x+.25, rect.getPosition().y + 1);
+                        fallCounter--;
+                    }
+
+
+                }
+                
+                if (rect.getPosition().y == 400) {
+                    jumpCounter = 0;
+                    fallCounter = 0;
+                }
+                
+                
             }
     
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
@@ -95,6 +104,7 @@ void Player::updateMovement(){
             // should not be included in final product    //
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
                 rect.move(-1,0);
+            
             }
     
             //                                          //
