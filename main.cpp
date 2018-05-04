@@ -18,6 +18,8 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Player.hpp"
+#include "Projectile.hpp"
+#include <vector>
 
 using namespace std;
 
@@ -26,9 +28,9 @@ using namespace std;
 
 int main(int, char const**)
 {
-    
-    int counter = 0;
-    int fallCounter = 0;
+    int counter = 0,
+    counter2 = 0,
+    counter3 = 0;
     
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
@@ -76,6 +78,14 @@ int main(int, char const**)
     Player player1(sprite);
 //    player1.setSprite(sprite);
     
+    vector<Projectile>::const_iterator iterator;
+    
+    vector<Projectile> ProjectileArr;
+    
+    Projectile projectile1;
+    
+    
+    
     // Start the game loop
     while (window.isOpen())
     {
@@ -95,71 +105,21 @@ int main(int, char const**)
         }
         
         
-//        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-//            sprite.move(1,0);
-//            if (counter < 0) {
-//                sprite.setTextureRect(sf::IntRect(0,80,70,100));
-//                counter++;
-//            } else if (counter < 50){
-//                sprite.setTextureRect(sf::IntRect(70,100,80,100));
-//                counter++;
-//            }else if(counter < 100){
-//                sprite.setTextureRect(sf::IntRect(155,100,60,90));
-//                counter++;
-//            }else if(counter > 150){
-//                sprite.setTextureRect(sf::IntRect(207,100,90,90));
-//                counter++;
-//
-//            } else if(counter <= 200) {
-//                counter++;
-//                counter = 0;
-//            }
-//        }
-        
-        
-//        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-//            int gravity = 10;
-//            sprite.move(0,-5);
-//            if (counter < 50){
-//                sprite.setTextureRect(sf::IntRect(0,180,100,100));
-//                counter++;
-//            }else if(counter < 100){
-//                sprite.setTextureRect(sf::IntRect(92,170,86,105));
-//                counter++;
-//            }else if(counter == 100){
-//                fallCounter = 100;
-//                sprite.setTextureRect(sf::IntRect(92,170,86,105));
-//                fallCounter--;
-//
-//            } else if(fallCounter > 50) {
-//                sprite.setTextureRect(sf::IntRect(175,175,75,150));
-//                sprite.move(0,1);
-//                fallCounter--;
-//
-//            }else if (fallCounter > 0){
-//                sprite.setTextureRect(sf::IntRect(250,200,80,100));
-//                sprite.move(0,1);
-//                fallCounter--;
-//            }
-//
-//        }
-        
-//        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-//            sprite.move(0, 1);
-//
-//
-//        }
-//
-//
-//        // should not be included in final product    //
-//        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-//            sprite.move(-1,0);
-//        }
-//        //                                          //
-        
-        
         // Clear screen
         window.clear();
+        
+        
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
+            
+            projectile1.getRect().setPosition(player1.getRect().getPosition());
+            ProjectileArr.push_back(projectile1);
+            
+        }
+        
+        for (int i = 0 ; i < ProjectileArr.size(); i++) {
+            window.draw(ProjectileArr[i].getRect());
+        }
+        
         
         player1.update();
         player1.updateMovement();
