@@ -19,7 +19,7 @@ class Entity{
 public:
     Entity();
     Entity(sf::RectangleShape rect, sf::Sprite sprite, sf::Text text);
-    sf::RectangleShape getRect() const {return rect;}
+    sf::RectangleShape& getRect() {return rect;}
     sf::Sprite getSprite() const {return sprite;}
     sf::Text getText() const {return text;}
     
