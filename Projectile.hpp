@@ -23,6 +23,7 @@ public:
 protected:
     int counter = 0;
     int AD = 0;
+    int direction = 1;
     
 };
 

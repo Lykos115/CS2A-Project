@@ -1,113 +1,71 @@
 //
 //  Player.cpp
-//  CS2A-Project
+//  2Atest
 //
-//  Created by Lykos on 4/25/18.
+//  Created by Lykos on 5/8/18.
 //  Copyright © 2018 Lykos. All rights reserved.
 //
 
 #include "Player.hpp"
-
-Player :: Player(sf::Sprite sprite){
-    
-    this->sprite = sprite;
-    rect.setPosition(400, 400);
-    
-}
-
-void Player::update(){
+Player :: Player(){
     
     
-    sprite.setPosition(rect.getPosition());
-    sprite.setTextureRect(sf::IntRect(0,80,70,100));
+    
     
 }
 
-void Player::updateMovement(){
-    int ground = rect.getPosition().y;
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-                rect.move(1,0);
-//                if (counter < 0) {
-//                    sprite.setTextureRect(sf::IntRect(0,80,70,100));
-//                    counter++;
-//                } else
-                 if (counter < 50){
-                    sprite.setTextureRect(sf::IntRect(70,100,80,100));
-                    counter++;
-                }else if(counter < 100){
-                    sprite.setTextureRect(sf::IntRect(155,100,60,90));
-                    counter++;
-                }else if(counter < 150){
-                    sprite.setTextureRect(sf::IntRect(207,100,90,90));
-                    counter++;
-    
-                } else if(counter < 200) {
-                    
-                    counter = 0;
-                }
-            } else{
-                sprite.setTextureRect(sf::IntRect(0,80,70,100));
-            }
-    
-    
-    
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-                
-                rect.move(0,-1);
-                if (jumpCounter < 50){
-                    sprite.setTextureRect(sf::IntRect(0,180,100,100));
-                    rect.setPosition(rect.getPosition().x, rect.getPosition().y);
-                    jumpCounter++;
-                    //                        cout << rect.getPosition().y << endl;
-                }else if(jumpCounter < 100){
-                    sprite.setTextureRect(sf::IntRect(92,170,86,105));
-                    rect.setPosition(rect.getPosition().x, rect.getPosition().y);
-                    
-                    jumpCounter++;
-                    //                        cout << rect.getPosition().y << endl;
-                } else if (jumpCounter == 100){
-                    sprite.setTextureRect(sf::IntRect(175,175,75,150));
-                    fallCounter = rect.getPosition().y;
-                    
-                }
-                cout << jumpCounter << endl;
-                
-                while (fallCounter > 0 && rect.getPosition().y < 400) {
-                    if (fallCounter >= 100) {
-                        sprite.setTextureRect(sf::IntRect(175,175,75,150));
-                        rect.setPosition(rect.getPosition().x+.25, rect.getPosition().y + 1);
-                        fallCounter--;
-                    } else if (fallCounter >= 50){
-                        sprite.setTextureRect(sf::IntRect(250,200,80,100));
-                        rect.setPosition(rect.getPosition().x+.25, rect.getPosition().y + 1);
-                        fallCounter--;
-                    }
 
+Player :: Player(sf :: Texture* texture, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight) : animation(texture, imageCount, switchTime){
+    
+    this -> speed = speed;
+    this -> jumpHeight = jumpHeight;
+    row = 0;
+    faceRight = true;
+    body.setSize(sf::Vector2f(100.0f, 100.0f));
+    body.setPosition(206.0f, 206.0f);
+    body.setTexture(texture);
+    
+}
 
-                }
-                
-                if (rect.getPosition().y == 400) {
-                    jumpCounter = 0;
-                    fallCounter = 0;
-                }
-                
-                
-            }
+void Player::Update(float deltaTime){
     
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-                rect.move(0, 1);
+    velocity.x *= 0.0f;
     
+    sf::Vector2f movement(0.0f, 0.0f);
     
-            }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        velocity.x -= speed;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+        velocity.x += speed;
+    }
     
-    
-            // should not be included in final product    //
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-                rect.move(-1,0);
-            
-            }
-    
-            //                                          //
+    if (sf::Keyboard:: isKeyPressed(sf::Keyboard::Up) && canJump) {
+        canJump = false;
+        
+        velocity.y = -sqrtf(2.0f * 981.0f * jumpHeight);
+    }
     
     
+    if (velocity.x == 0.0f) {
+        row = 0;
+    } else {
+        row = 1;
+        
+        if (velocity.x > 0.0f) {
+            faceRight = true;
+        } else {
+            faceRight = false;
+        }
+    }
+    
+    animation.update(row, deltaTime, faceRight);
+    body.setTextureRect(animation.uvRect);
+    body.move(velocity * deltaTime);
+    
+}
+
+void Player::Draw(sf::RenderWindow& window){
+    
+    window.draw(body);
 }
