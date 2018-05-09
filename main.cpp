@@ -31,7 +31,7 @@ int main(int, char const**)
     sf::Texture playerTexture;
     playerTexture.loadFromFile(resourcePath() + "akali.png");
     
-    Player player(&playerTexture, sf::Vector2u(4,5), 0.3f, 100.0f);
+    Player player(&playerTexture, sf::Vector2u(4,5), 0.3f, 100.0f, 1.0f);
     
     
     float deltaTime = 0.0f;
@@ -41,6 +41,9 @@ int main(int, char const**)
     while (window.isOpen())
     {
         deltaTime = clock.restart().asSeconds();
+        if (deltaTime > 1.0f / 20.0f) {
+            deltaTime = 1.0f / 20.0f;
+        }
         
         sf::Event event;
         while (window.pollEvent(event))

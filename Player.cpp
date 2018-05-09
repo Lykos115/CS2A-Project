@@ -43,8 +43,12 @@ void Player::Update(float deltaTime){
     if (sf::Keyboard:: isKeyPressed(sf::Keyboard::Up) && canJump) {
         canJump = false;
         
-        velocity.y = -sqrtf(2.0f * 981.0f * jumpHeight);
+        velocity.y = -sqrt(2.0f * 981.0f * jumpHeight); //sqrt
     }
+    
+//    velocity.y +=981.0f * deltaTime;
+    
+    
     
     
     if (velocity.x == 0.0f) {
@@ -58,6 +62,11 @@ void Player::Update(float deltaTime){
             faceRight = false;
         }
     }
+//    if (velocity.y == 0.0f) {
+//        row = 0;
+//    } else {
+//        row = 2;
+//    }
     
     animation.update(row, deltaTime, faceRight);
     body.setTextureRect(animation.uvRect);
@@ -69,3 +78,30 @@ void Player::Draw(sf::RenderWindow& window){
     
     window.draw(body);
 }
+
+void Player::onCollision(sf::Vector2f direction){
+    
+    if (direction.x < 0.0f) {
+        velocity.x = 0.0f;
+    } else if (direction.x > 0.0f){
+        
+        velocity.x = 0.0f;
+    }
+    
+    if (direction.y < 0.0f) {
+        
+        velocity.y = 0.0f;
+        canJump = true;
+        
+    } else if(direction.y > 0.0f){
+        
+        velocity.y = 0.0f;
+    }
+    
+}
+
+
+
+
+
+

@@ -26,8 +26,8 @@ bool Collider:: checkCollision(Collider &other,sf::Vector2f& direction, float pu
     sf::Vector2f thisPosition = GetPostion();
     sf::Vector2f thisHalfSize = getHalfSize();
     
-    int deltaX = otherPosition.x - thisPosition.x; // float
-    int deltaY = otherPosition.y - thisPosition.y; // float
+    float deltaX = otherPosition.x - thisPosition.x; // float
+    float deltaY = otherPosition.y - thisPosition.y; // float
     
     float intersectX = abs(deltaX) - (otherHalfSize.x + thisHalfSize.x);
     float intersectY = abs(deltaY) - (otherHalfSize.y + thisHalfSize.y);

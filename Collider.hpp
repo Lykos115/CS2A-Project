@@ -6,6 +6,7 @@
 //
 
 #include <SFML/Graphics.hpp>
+#include <math.h>
 #ifndef Collider_hpp
 #define Collider_hpp
 

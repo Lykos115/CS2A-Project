@@ -8,6 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include "Animation.hpp"
 #include "Collider.hpp"
+#include <math.h>
 #ifndef Player_hpp
 #define Player_hpp
 
@@ -19,6 +20,8 @@ public:
     Player(sf :: Texture* texture, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight);
     void Update(float deltaTime);
     void Draw(sf::RenderWindow& window);
+    
+    void onCollision(sf::Vector2f direction);
     
     Collider getCollider() {return Collider(body);}
     
