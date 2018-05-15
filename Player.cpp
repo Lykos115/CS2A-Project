@@ -44,7 +44,16 @@ void Player::Update(float deltaTime){
         canJump = false;
         
         velocity.y = -sqrt(2.0f * 981.0f * jumpHeight); //sqrt
+        
     }
+    ///////////////////////////////
+    
+    
+//    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+//        <#statements#>
+//    }
+    
+    //////////////////////////////
     
 //    velocity.y +=981.0f * deltaTime;
     

@@ -18,6 +18,9 @@
 #include <SFML/Graphics.hpp>
 #include "Animation.hpp"
 #include "Player.hpp"
+#include "Projectile.hpp"
+#include <vector>
+using namespace std;
 
 // Here is a small helper for you! Have a look.
 #include "ResourcePath.hpp"
@@ -29,9 +32,13 @@ int main(int, char const**)
     
     
     sf::Texture playerTexture;
-    playerTexture.loadFromFile(resourcePath() + "akali.png");
+    playerTexture.loadFromFile(resourcePath() + "akalicopy.png");
     
     Player player(&playerTexture, sf::Vector2u(4,5), 0.3f, 100.0f, 1.0f);
+    
+    
+    vector<Projectile> projectileArr;
+    Projectile scyth(&playerTexture, sf::Vector2u(4,5),0.3f, 200.0f);
     
     
     float deltaTime = 0.0f;
@@ -59,10 +66,16 @@ int main(int, char const**)
 //        animation.update(0, deltaTime, true);
 //        player.setTextureRect(animation.uvRect);
         
+        
+        
+        
+        
         player.Update(deltaTime);
+//        scyth.Update(deltaTime);
         
         window.clear();
         player.Draw(window);
+//        scyth.Draw(window);
         window.display();
     }
 

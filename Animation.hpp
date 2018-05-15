@@ -20,6 +20,7 @@ public:
     void update(int row, float deltaTime, bool faceRight);
     
     
+    
     sf::IntRect uvRect;
     
     
