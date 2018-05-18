@@ -22,6 +22,7 @@
 #include "platform.hpp"
 #include "Enemy.h"
 #include "Projectile.hpp"
+#include <iostream>
 #include <vector>
 #include <cstdlib>
 #include <time.h>
@@ -55,44 +56,35 @@ int main(int, char const**)
     Projectile scyth(&playerTexture, sf::Vector2u(4,5),0.3f, 200.0f);
     
 	Platform floor(nullptr, sf::Vector2f(2000.0f,25.0f), player.getPosition());	
-    
+
 	sf::View view;
-	view.setSize(600.0f,400.0f);
+	//view.setSize(600.0f,400.0f);
 
     srand(static_cast<unsigned int>(time(NULL)));
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
-
-
-    // Player Object
-    sf::Texture playerTexture;
-    playerTexture.loadFromFile(resourcePath() + "akalicopy.png");
-    Player player(&playerTexture, sf::Vector2u(4,5), 0.3f, 100.0f, 1.0f);
     // Enemy objects
     sf::Texture enemyTexture;
-    enemyTexture.loadFromFile(resourcePath() + "sprite.png");
+    enemyTexture.loadFromFile("sprite.png");
     Enemy enemy1(&enemyTexture,sf::Vector2u(1,1), true, 110.0f, 20.0f);
     Enemy enemy2(&enemyTexture,sf::Vector2u(1,1), true, 110.0f, 20.0f);
     Enemy enemy3(&enemyTexture,sf::Vector2u(1,1), true, 110.0f, 20.0f);
 
-
-    vector<Projectile> projectileArr;
-    Projectile scyth(&playerTexture, sf::Vector2u(4,5),0.3f, 200.0f);
+	enemy1.place(sf::Vector2f(500.0f, 500.0f));
 
     float deltaTime = 0.0f;
     sf::Clock clock;
-    float secondTime = 0;
+	float dTime = 0.0f;
 
     while (window.isOpen())
     {
         deltaTime = clock.restart().asSeconds();
-
-    //  if (deltaTime > 1.0f / 20.0f) {
-    //  	deltaTime = 1.0f / 20.0f;
-    //  }
+		dTime = clock.restart().asSeconds();
 
         if (deltaTime > 1.0f / 20.0f) {
             deltaTime = 1.0f / 20.0f;
         }
+
+        if (dTime > 1.0f / 20.0f)
+            dTime = 1.0f / 20.0f;
 
         sf::Event event;
         while (window.pollEvent(event))
@@ -112,18 +104,11 @@ int main(int, char const**)
 //        animation.update(0, deltaTime, true);
 //        player.setTextureRect(animation.uvRect);
 
-
-        secondTime += deltaTime;
-        if(secondTime > 0.30f){
-            secondTime = 0;
-            enemy1.behavior(deltaTime);
-            enemy2.behavior(deltaTime);
-            enemy3.behavior(deltaTime);
-        }
-
         player.Update(deltaTime);
+		enemy1.behavior(dTime);
 		floor.GetCollider().checkCollision(player.getCollider(), 0.0f);
-//        scyth.Update(deltaTime);
+		//floor.GetCollider().checkCollision(enemy1.getCollider(), 0.0f);
+		//scyth.Update(deltaTime);
         view.setCenter(player.getPosition());
         window.clear();
 		window.setView(view);
@@ -131,8 +116,8 @@ int main(int, char const**)
 		floor.Draw(window);
         player.Draw(window);
         enemy1.drawEnemy(window);
-        enemy2.drawEnemy(window);
-        enemy3.drawEnemy(window);
+        //enemy2.drawEnemy(window);
+        //enemy3.drawEnemy(window);
 //        scyth.Draw(window);
 
         window.display();

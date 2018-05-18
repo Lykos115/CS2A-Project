@@ -42,20 +42,10 @@ void Player::Update(float deltaTime){
     
     if (sf::Keyboard:: isKeyPressed(sf::Keyboard::Up) && canJump) {
      
-        velocity.y = -sqrt(2.0f * 981.0f * jumpHeight); //sqrt
-        
-    }
-    ///////////////////////////////
-    
-    
-//    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-//        <#statements#>
-//    }
-    
-    //////////////////////////////
-    
-   velocity.y +=981.0f * deltaTime;
-       
+        velocity.y = -sqrt(2.0f * 981.0f * jumpHeight); //sqrt  
+   	}
+	velocity.y +=981.0f * deltaTime;
+
     if (velocity.x == 0.0f) {
         row = 0;
     } else {
