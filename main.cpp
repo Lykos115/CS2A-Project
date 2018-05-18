@@ -18,6 +18,7 @@
 #include <SFML/Graphics.hpp>
 #include "Animation.hpp"
 #include "Player.hpp"
+#include "Enemy.hpp"
 #include "Projectile.hpp"
 #include <vector>
 using namespace std;
@@ -28,22 +29,27 @@ using namespace std;
 int main(int, char const**)
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
-    
-    
-    
+
+
+    // Player Object
     sf::Texture playerTexture;
     playerTexture.loadFromFile(resourcePath() + "akalicopy.png");
-    
     Player player(&playerTexture, sf::Vector2u(4,5), 0.3f, 100.0f, 1.0f);
-    
-    
+    // Enemy objects
+    sf::Texture enemyTexture;
+    enemyTexture.loadFromFile(resourcePath() + "sprite.png")
+    Enemy enemy1(&enemyTexture,sf::Vector2u(1,1), true, 110.0f, 20.0f);
+    Enemy enemy2(&enemyTexture,sf::Vector2u(1,1), true, 110.0f, 20.0f);
+    Enemy enemy3(&enemyTexture,sf::Vector2u(1,1), true, 110.0f, 20.0f);
+
+
     vector<Projectile> projectileArr;
     Projectile scyth(&playerTexture, sf::Vector2u(4,5),0.3f, 200.0f);
-    
-    
+
+
     float deltaTime = 0.0f;
     sf::Clock clock;
-
+    float secondTime = 0;
 
     while (window.isOpen())
     {
@@ -51,7 +57,7 @@ int main(int, char const**)
         if (deltaTime > 1.0f / 20.0f) {
             deltaTime = 1.0f / 20.0f;
         }
-        
+
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -62,17 +68,22 @@ int main(int, char const**)
                 window.close();
             }
         }
-        
+
 //        animation.update(0, deltaTime, true);
 //        player.setTextureRect(animation.uvRect);
-        
-        
-        
-        
-        
+
+
+        secondTime += deltaTime;
+        if(secondTime > 0.30f){
+            secondTime = 0;
+            enemy1.behavior();
+            enemy2.behavior();
+            enemy3.behavior();
+        }
+
         player.Update(deltaTime);
 //        scyth.Update(deltaTime);
-        
+
         window.clear();
         player.Draw(window);
 //        scyth.Draw(window);
