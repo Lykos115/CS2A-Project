@@ -18,9 +18,11 @@
 #include <SFML/Graphics.hpp>
 #include "Animation.hpp"
 #include "Player.hpp"
-#include "Enemy.hpp"
+#include "Enemy.h"
 #include "Projectile.hpp"
 #include <vector>
+#include <cstdlib>
+#include <time.h>
 using namespace std;
 
 // Here is a small helper for you! Have a look.
@@ -28,6 +30,7 @@ using namespace std;
 
 int main(int, char const**)
 {
+    srand(static_cast<unsigned int>(time(NULL)));
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
 
 
@@ -37,7 +40,7 @@ int main(int, char const**)
     Player player(&playerTexture, sf::Vector2u(4,5), 0.3f, 100.0f, 1.0f);
     // Enemy objects
     sf::Texture enemyTexture;
-    enemyTexture.loadFromFile(resourcePath() + "sprite.png")
+    enemyTexture.loadFromFile(resourcePath() + "sprite.png");
     Enemy enemy1(&enemyTexture,sf::Vector2u(1,1), true, 110.0f, 20.0f);
     Enemy enemy2(&enemyTexture,sf::Vector2u(1,1), true, 110.0f, 20.0f);
     Enemy enemy3(&enemyTexture,sf::Vector2u(1,1), true, 110.0f, 20.0f);
@@ -76,9 +79,9 @@ int main(int, char const**)
         secondTime += deltaTime;
         if(secondTime > 0.30f){
             secondTime = 0;
-            enemy1.behavior();
-            enemy2.behavior();
-            enemy3.behavior();
+            enemy1.behavior(deltaTime);
+            enemy2.behavior(deltaTime);
+            enemy3.behavior(deltaTime);
         }
 
         player.Update(deltaTime);
@@ -86,6 +89,9 @@ int main(int, char const**)
 
         window.clear();
         player.Draw(window);
+        enemy2.drawEnemy(window);
+        enemy2.drawEnemy(window);
+        enemy2.drawEnemy(window);
 //        scyth.Draw(window);
         window.display();
     }

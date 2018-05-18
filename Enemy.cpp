@@ -1,23 +1,23 @@
-#include"Enemy.hpp"
+#include"Enemy.h"
 
-Enemy::Enemy{
+Enemy::Enemy(){
 
 
 
 }
 
-Enemy::Enemy(sf :: Texture* texture, sf::Vector2u image, bool alive, float speed, jumpheight;){
+Enemy::Enemy(sf :: Texture* texture, sf::Vector2u image, bool alive, float speed,float jumpHeight){
     this -> jumpHeight = jumpHeight;
     this -> alive = alive;
-    this -> speed = speed;S
+    this -> speed = speed;
     body.setSize(sf::Vector2f(100.0f, 100.0f));
     body.setPosition(306.0f, 206.0f);
     body.setTexture(texture);
 }
 
-Enemy::behavior(){
+void Enemy::behavior(float deltaTime){
     if(alive){
-    x = (rand() % 3)+1
+        int x = (rand() % 3)+1;
     if(x == 1)
         velocity.x -= speed;
     if(x == 2)
@@ -30,24 +30,24 @@ Enemy::behavior(){
     body.move(velocity * deltaTime);
 }
 
-Enemy::onCollision(){
-if (direction.x < 0.0f) {
-        velocity.x = 0.0f;
-    } else if (direction.x > 0.0f){
+//Enemy::onCollision(){
+//if (direction.x < 0.0f) {
+//        velocity.x = 0.0f;
+//    } else if (direction.x > 0.0f){
+//
+//        velocity.x = 0.0f;
+//    }
+//
+//    if (direction.y < 0.0f) {
+//        canJump = true;
+//        velocity.y = 0.0f;
+//    } else if(direction.y > 0.0f){
+//
+//        velocity.y = 0.0f;
+//    }
+//}
 
-        velocity.x = 0.0f;
-    }
-
-    if (direction.y < 0.0f) {
-        canJump = true;
-        velocity.y = 0.0f;
-    } else if(direction.y > 0.0f){
-
-        velocity.y = 0.0f;
-    }
-}
-
-Enemy::drawEnemy(sf::RenderWindow& window){
+void Enemy::drawEnemy(sf::RenderWindow& window){
 
     window.draw(body);
 }
