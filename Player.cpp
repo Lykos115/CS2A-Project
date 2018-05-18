@@ -22,7 +22,7 @@ Player :: Player(sf :: Texture* texture, sf::Vector2u imageCount, float switchTi
     row = 0;
     faceRight = true;
     body.setSize(sf::Vector2f(100.0f, 100.0f));
-    body.setPosition(206.0f, 206.0f);
+    body.setPosition(250.0f, 900.0f);
     body.setTexture(texture);
     
 }
@@ -41,8 +41,7 @@ void Player::Update(float deltaTime){
     }
     
     if (sf::Keyboard:: isKeyPressed(sf::Keyboard::Up) && canJump) {
-        canJump = false;
-        
+     
         velocity.y = -sqrt(2.0f * 981.0f * jumpHeight); //sqrt
         
     }
@@ -55,11 +54,8 @@ void Player::Update(float deltaTime){
     
     //////////////////////////////
     
-//    velocity.y +=981.0f * deltaTime;
-    
-    
-    
-    
+   velocity.y +=981.0f * deltaTime;
+       
     if (velocity.x == 0.0f) {
         row = 0;
     } else {
@@ -108,9 +104,3 @@ void Player::onCollision(sf::Vector2f direction){
     }
     
 }
-
-
-
-
-
-

@@ -20,12 +20,10 @@ public:
     Player(sf :: Texture* texture, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight);
     void Update(float deltaTime);
     void Draw(sf::RenderWindow& window);
-    
-    void onCollision(sf::Vector2f direction);
-    
+	void onCollision(sf::Vector2f direction);
     Collider getCollider() {return Collider(body);}
-    
-    
+    sf::Vector2f getPosition() {return body.getPosition();}    
+
 private:
     
     sf::RectangleShape body;
@@ -35,7 +33,7 @@ private:
     bool faceRight;
     
     sf::Vector2f velocity;
-    bool canJump;
+    bool canJump = true;
     float jumpHeight;
     
     
