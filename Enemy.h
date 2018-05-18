@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 #include "Animation.hpp"
 #include "Collider.hpp"
 #ifndef Enemy_hpp
@@ -19,7 +20,7 @@ class Enemy{
     	Enemy();
     	Enemy(sf :: Texture* texture, sf::Vector2u image, bool alive, float speed, float jumpHeight);
     	void place(sf::Vector2f pos) {body.setPosition(pos);}
-		void behavior(float deltaTime);
+		void behavior(float deltaTime, int temp);
 		Collider getCollider() {return Collider(body);}
 		sf::Vector2f getPosition() {return body.getPosition();}
     	void drawEnemy(sf::RenderWindow& window);

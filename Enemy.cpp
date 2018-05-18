@@ -14,21 +14,24 @@ Enemy::Enemy(sf :: Texture* texture, sf::Vector2u image, bool alive, float speed
     body.setTexture(texture);
 }
 
-void Enemy::behavior(float deltaTime){
+void Enemy::behavior(float deltaTime, int temp){
 	if(alive){
-        int x = (rand() % 3)+1;
-    	if(x == 1)
-        	velocity.x -= speed;
-    	else if(x == 2){
+    	if(temp == 1 || temp == 3){
+			std::cout << "1\n"; 
         	velocity.x += speed;
 		}
     	else{
-			canJump = false;
-        	velocity.y = -sqrt(2.0f * 981.0f * jumpHeight);
-		}	
+			std::cout << "2\n";
+        	velocity.x -= speed;
+		}
+    	//else{
+		//	std::cout << "3\n";
+		//	canJump = false;
+        //	velocity.y = -sqrt(2.0f * 981.0f * jumpHeight);
+		//}	
 	}
 	
-	velocity.y -= 981.0f * deltaTime;
+	velocity.y += 981.0f * deltaTime;
 
 	body.move(velocity * deltaTime);
 }
